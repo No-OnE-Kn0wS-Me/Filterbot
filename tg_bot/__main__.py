@@ -56,6 +56,8 @@ DATA_EXPORT = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
+img = "https://telegra.ph/file/1ca41b5335290524eee7d.jpg"
+
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("tg_bot.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
@@ -131,13 +133,15 @@ def start(bot: Bot, update: Update, args: List[str]):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_text(
-                PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
-                parse_mode=ParseMode.MARKDOWN,reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="😬ADD YOUR GROUP😬", url="t.me/{}?startgroup=true".format(bot.username))]]))
+            update.effective_message.reply_photo(img,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
+                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 Support Chat.",url="https://telegram.dog/allukatm")],  
+                                                [InlineKeyboardButton(text=" Add in your Group",url="http://t.me/zoldycktmbot?startgroup=true"),InlineKeyboardButton(text="Website",url="meanii.me")]]))
     else:
-        update.effective_message.reply_text("")
+         
 
-
+        update.effective_message.reply_text("Heya, How can I help you? 🙂",reply_markup=InlineKeyboardMarkup(
+                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" ✉️ Public Feeds",url="https://telegram.dog/allukatm")]]))
+                                  
 # for test purposes
 def error_callback(bot, update, error):
     try:
