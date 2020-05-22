@@ -18,25 +18,17 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█ █░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█ █░░║║║╠─║─║─║║║║║╠─░░█ █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█ █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
 
-*Hello* {},*My Name is* *{}*! 
+Hello {},My Name is  {}!. 
 
-```You You Can Add any kind of Filters to This Bot!```
-
-*Channel:© @DX_Botz*
-
-/help for more details..
+I'm created To Set Filters only. 
 """
 
 HELP_STRINGS = """
-Hello! my name *{}*.
+Hello! my name is *{}*.
 
 *Main Available Commands* are Below:
 
-All of the following commands  / can  be used...
-
-And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nഈ പറഞ്ഞിരിക്കുന്ന commandകൾ എല്ലാം  / അല്ലെങ്കിൽ ! വെച്ച് ഉപയോഗിക്കാവുന്നതാണ്...\n")
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
@@ -56,7 +48,7 @@ DATA_EXPORT = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
-img = "https://telegra.ph/file/1ca41b5335290524eee7d.jpg"
+img = "https://telegra.ph/file/848c5dc7531332a1c6507.jpg"
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("tg_bot.modules." + module_name)
@@ -134,13 +126,13 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(img,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 Support Chat.",url="https://telegram.dog/allukatm")],  
-                                                [InlineKeyboardButton(text=" Add in your Group",url="http://t.me/zoldycktmbot?startgroup=true"),InlineKeyboardButton(text="Website",url="meanii.me")]]))
+                                                [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/devil_queenbot")],  
+                                                [InlineKeyboardButton(text=" Add to Group",url="https://t.me/devil_queenbot/7"),InlineKeyboardButton(text="🙈Click here",url="https://telegram.dog/queendevilbot")]]))
     else:
          
 
         update.effective_message.reply_text("Heya, How can I help you? 🙂",reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" ✉️ Public Feeds",url="https://telegram.dog/allukatm")]]))
+                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 🎭Channel",url="https://telegram.dog/devil_queenbot")]]))
                                   
 # for test purposes
 def error_callback(bot, update, error):
