@@ -126,13 +126,13 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(img,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/devil_queenbot")],  
+                                                [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/N0tHiNg_iS_hErE")],  
                                                 [InlineKeyboardButton(text=" Add to Group",url="https://t.me/devil_queenbot/7"),InlineKeyboardButton(text="🙈Click here",url="https://telegram.dog/queendevilbot")]]))
     else:
          
 
         update.effective_message.reply_text("Heya, How can I help you? 🙂",reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 🎭Channel",url="https://telegram.dog/devil_queenbot")]]))
+                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 🎭Channel",url="https://telegram.dog/N0tHiNg_iS_hErE")]]))
                                   
 # for test purposes
 def error_callback(bot, update, error):
