@@ -9,7 +9,7 @@
     "manager",
     "3"
   ],
-  "repository": "hhttps://github.com/jijin0078/Filter-Bot",
+  "repository": "https://github.com/salmanpdr/Filterbot",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable env variables",
@@ -21,11 +21,11 @@
     },
     "OWNER_ID": {
       "description": "An integer of consisting of your owner ID",
-      "value": "809546777"
+      "value": "861055237"
     },
     "OWNER_USERNAME": {
       "description": "Your username",
-      "value": "D_ar_k_Angel"
+      "value": "No_OnE_Kn0wS_Me"
     },
     "WEBHOOK": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode messages",
@@ -41,15 +41,15 @@
     },
     "SUDO_USERS": {
       "description": "A space separated list of user_ids which should be considered sudo users",
-      "value": "80954677 699615803"
+      "value": "80954677 861055237"
     },
     "SUPPORT_USERS": {
       "description": "A space separated list of user_ids which should be considered support users (can gban/ungban, nothing else)",
-      "value": "80954677 699615803"
+      "value": "80954677 861055237"
     },
     "WHITELIST_USERS": {
       "description": "A space separated list of user_ids which should be considered whitelisted - they can't be banned.",
-      "value": "80954677 699615803"
+      "value": "80954677 861055237"
     },
     "DONATION_LINK": {
       "description": "Optional: link where you would like to receive donations.",
