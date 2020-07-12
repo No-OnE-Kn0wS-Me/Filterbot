@@ -126,8 +126,8 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(img,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/N0tHiNg_iS_hErE")],  
-                                                [InlineKeyboardButton(text=" Add to Group",url="https://t.me/devil_queenbot/7"),InlineKeyboardButton(text="🙈Click here",url="https://telegram.dog/queendevilbot")]]))
+                                                [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/Mai_bOTs")],  
+                                                [InlineKeyboardButton(text="Owner",url="https://t.me/No_OnE_Kn0wS_Me"),InlineKeyboardButton(text="🙈Click here",url="https://telegram.dog/queendevilbot")]]))
     else:
          
 
