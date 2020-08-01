@@ -2,25 +2,24 @@ from functools import wraps
 
 from telegram import Bot, Chat, ChatMember, Update, User, ParseMode
 
-from tg_bot import dispatcher, DEL_CMDS, WHITELIST_USERS, SUPPORT_USERS, SUDO_USERS, DEV_USERS
+from tg_bot import dispatcher, DEL_CMDS, WHITELIST_USERS, SUPPORT_USERS, SUDO_USERS
 
 def is_whitelist_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    return user_id in WHITELIST_USERS or user_id in SUPPORT_USERS or user_id in SUDO_USERS or user_id in DEV_USERS
+    return user_id in WHITELIST_USERS or user_id in SUPPORT_USERS or user_id in SUDO_USERS
 
 
 def is_support_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    return user_id in SUPPORT_USERS or user_id in SUDO_USERS or user_id in DEV_USERS
+    return user_id in SUPPORT_USERS or user_id in SUDO_USERS
 
 
 def is_sudo_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    return user_id in SUDO_USERS or user_id in DEV_USERS
+    return user_id in SUDO_USERS
 
 
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
 
     if chat.type == 'private' \
             or user_id in SUDO_USERS \
-            or user_id in DEV_USERS \
             or chat.all_members_are_administrators:
         return True
 
@@ -49,7 +48,6 @@ def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -
 
     if chat.type == 'private' \
             or user_id in SUDO_USERS \
-            or user_id in DEV_USERS \
             or user_id in WHITELIST_USERS \
             or chat.all_members_are_administrators:
         return True
@@ -64,24 +62,6 @@ def is_user_in_chat(chat: Chat, user_id: int) -> bool:
     member = chat.get_member(user_id)
     return member.status not in ('left', 'kicked')
 
-
-def dev_plus(func):
-    @wraps(func)
-    def is_dev_plus_func(bot: Bot, update: Update, *args, **kwargs):
-
-        user = update.effective_user
-
-        if user.id in DEV_USERS:
-            return func(bot, update, *args, **kwargs)
-        elif not user:
-            pass
-        elif DEL_CMDS and " " not in update.effective_message.text:
-            update.effective_message.delete()
-        else:
-            update.effective_message.reply_text("This is a developer restricted command. You do not have permissions to run this.")
-
-    return is_dev_plus_func
-    
 
 def sudo_plus(func):
     @wraps(func)
