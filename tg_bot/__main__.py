@@ -10,7 +10,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
-    ALLOW_EXCL
+    ALLOW_EXCL, START_PHOTTO
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from tg_bot.modules import ALL_MODULES
@@ -21,7 +21,7 @@ PM_START_TEXT = """
 
 Hello {},My Name is {} !. 
 
-I'm created To Set Filters only. 
+I'm Filter Manager Bot Created By @Mai_BoTs. 
 """
 
 HELP_STRINGS = """
@@ -48,7 +48,7 @@ DATA_EXPORT = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
-img = "https://telegra.ph/file/848c5dc7531332a1c6507.jpg"
+DEVIL_IMG = Config.START_PHOTTO
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("tg_bot.modules." + module_name)
@@ -125,14 +125,14 @@ def start(bot: Bot, update: Update, args: List[str]):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(img,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
+            update.effective_message.reply_photo(DEVIL_IMG,PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="📞Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 👥 channel.",url="https://telegram.dog/Mai_bOTs")],  
-                                                [InlineKeyboardButton(text="Owner",url="https://t.me/No_OnE_Kn0wS_Me"),InlineKeyboardButton(text="🙈Click here",url="https://telegram.dog/queendevilbot")]]))
+                                                [InlineKeyboardButton(text="Owner",url="https://t.me/No_OnE_Kn0wS_Me"),InlineKeyboardButton(text="Mai Source",url="https://github.com/No-OnE-Kn0wS-Me/Filterbot")]]))
     else:
          
 
         update.effective_message.reply_text("Heya, How can I help you? 🙂",reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" 🎭Channel",url="https://telegram.dog/N0tHiNg_iS_hErE")]]))
+                                                [[InlineKeyboardButton(text="❓ Help",url="t.me/{}?start=help".format(bot.username)),InlineKeyboardButton(text=" Mai Repo",url="https://github.com/No-OnE-Kn0wS-Me/Filterbot")]]))
                                   
 # for test purposes
 def error_callback(bot, update, error):
