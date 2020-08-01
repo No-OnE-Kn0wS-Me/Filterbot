@@ -9,7 +9,7 @@
     "manager",
     "3"
   ],
-  "repository": "https://github.com/salmanpdr/Filterbot",
+  "repository": "https://github.com/NO-ONE-KN0WS-ME/Filterbot",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable env variables",
@@ -22,6 +22,10 @@
     "OWNER_ID": {
       "description": "An integer of consisting of your owner ID",
       "value": "861055237"
+    },
+    "START_PHOTTO": {
+      "description": "Telegraph img url For Start Cmd",
+      "value": ""
     },
     "OWNER_USERNAME": {
       "description": "Your username",
