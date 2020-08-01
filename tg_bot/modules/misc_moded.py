@@ -16,70 +16,7 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
-RUN_STRINGS = (
-    "*Error 404*"
-)
 
-SLAP_TEMPLATES = (
-    "{user1} {hits} {user2} with a {item}.",
-    "{user1} {hits} {user2} in the face with a {item}.",
-    "{user1} {hits} {user2} around a bit with a {item}.",
-    "{user1} {throws} a {item} at {user2}.",
-    "{user1} grabs a {item} and {throws} it at {user2}'s face.",
-    "{user1} launches a {item} in {user2}'s general direction.",
-    "{user1} starts slapping {user2} silly with a {item}.",
-    "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
-    "{user1} grabs up a {item} and {hits} {user2} with it.",
-    "{user1} ties {user2} to a chair and {throws} a {item} at them.",
-    "{user1} gave a friendly push to help {user2} learn to swim in lava."
-)
-
-ITEMS = (
-    "cast iron skillet",
-    "large trout",
-    "baseball bat",
-    "cricket bat",
-    "wooden cane",
-    "nail",
-    "printer",
-    "shovel",
-    "CRT monitor",
-    "physics textbook",
-    "toaster",
-    "portrait of Richard Stallman",
-    "television",
-    "five ton truck",
-    "roll of duct tape",
-    "book",
-    "laptop",
-    "old television",
-    "sack of rocks",
-    "rainbow trout",
-    "rubber chicken",
-    "spiked bat",
-    "fire extinguisher",
-    "heavy rock",
-    "chunk of dirt",
-    "beehive",
-    "piece of rotten meat",
-    "bear",
-    "ton of bricks",
-)
-
-THROW = (
-    "throws",
-    "flings",
-    "chucks",
-    "hurls",
-)
-
-HIT = (
-    "hits",
-    "whacks",
-    "slaps",
-    "smacks",
-    "bashes",
-)
 
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
@@ -133,6 +70,7 @@ def get_bot_ip(bot: Bot, update: Update):
     """ Sends the bot's IP address, so as to be able to ssh in if necessary.
         OWNER ONLY.
     """
+
     res = requests.get("http://ipinfo.io/ip")
     update.message.reply_text(res.text)
 
@@ -164,63 +102,6 @@ def get_id(bot: Bot, update: Update, args: List[str]):
         else:
             update.effective_message.reply_text("This group's id is `{}`.".format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
-
-
-@run_async
-def info(bot: Bot, update: Update, args: List[str]):
-    msg = update.effective_message  # type: Optional[Message]
-    user_id = extract_user(update.effective_message, args)
-
-    if user_id:
-        user = bot.get_chat(user_id)
-
-    elif not msg.reply_to_message and not args:
-        user = msg.from_user
-
-    elif not msg.reply_to_message and (not args or (
-            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
-        [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.")
-        return
-
-    else:
-        return
-
-    text = "<b>User info</b>:" \
-           "\nID: <code>{}</code>" \
-           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
-
-    if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name))
-
-    if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
-
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
-
-    if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
-    else:
-        if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
-        else:
-            if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
-
-            if user.id in WHITELIST_USERS:
-                text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them."
-
-    for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id).strip()
-        if mod_info:
-            text += "\n\n" + mod_info
-
-    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
-
-
 @run_async
 def get_time(bot: Bot, update: Update, args: List[str]):
     location = " ".join(args)
