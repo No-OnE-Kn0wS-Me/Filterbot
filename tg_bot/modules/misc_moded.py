@@ -250,6 +250,7 @@ def getsticker(bot: Bot, update: Update):
 __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
  - /info: get information about a user.
+ - /whois: Same as /info. 
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
  - /stickerid: reply to a sticker and get sticker id of that.
  - /getsticker: reply to a sticker and get that sticker as .png and image. 
@@ -259,7 +260,6 @@ __mod_name__ = "Misc"
 
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
-INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
@@ -268,7 +268,6 @@ GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
-dispatcher.add_handler(INFO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GETSTICKER_HANDLER)
