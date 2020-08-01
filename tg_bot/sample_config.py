@@ -17,7 +17,7 @@ class Config(object):
     # RECOMMENDED
     SQLALCHEMY_DATABASE_URI = 'sqldbtype://username:pw@hostname:port/db_name'  # needed for any database modules
     MESSAGE_DUMP = None  # needed to make sure 'save from' messages persist
-    START_PHOTTO = "https://telegra.ph/file/7703ef03a791f158e28db.jpg" # Any img Url To shown In the Start Menu
+    START_PHOTTO = 'https://telegra.ph/file/7703ef03a791f158e28db.jpg' # Any img Url To shown In the Start Menu
     LOAD = []
     NO_LOAD = ['translation', 'rss']
     WEBHOOK = False
