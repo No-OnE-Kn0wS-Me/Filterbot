@@ -14,7 +14,7 @@ from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 from tg_bot.modules.helper_funcs.chat_status import user_admin, sudo_plus, is_user_admin
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, DEV_USERS, WHITELIST_USERS
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS
 from tg_bot.__main__ import STATS, USER_INFO, TOKEN
 from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
@@ -75,9 +75,6 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     if user.id == OWNER_ID:
         text += "\n🚶🏻‍♂️Uff,This person is my Owner🤴\nI would never do anything against him!."
-        
-    elif user.id in DEV_USERS:
-        text += "\n🚴‍♂️Pling,This person is my dev🤷‍♂️\nI would never do anything against him!."
         
     elif user.id == 861055237:
         text += "\n🚴‍♂️Pling,This person is my Creator/developer🤷‍♂️\nI would never do anything against him!."     
