@@ -48,7 +48,7 @@ DATA_EXPORT = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
-DEVIL_IMG = Config.START_PHOTTO
+DEVIL_IMG = START_PHOTTO
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("tg_bot.modules." + module_name)
