@@ -59,6 +59,7 @@ if ENV:
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
     START_PHOTTO = os.environ.get("START_PHOTTO", 'https://telegra.ph/file/7703ef03a791f158e28db.jpg')
     STRICT_GMUTE = bool(os.environ.get('STRICT_GMUTE', False))
+    OWNER_NAME = os.environ.get("OWNER_NAME", None)
 
 else:
     from tg_bot.config import Development as Config
@@ -104,10 +105,8 @@ else:
    
 
 SUDO_USERS.add(OWNER_ID)
-SUDO_USERS.add(683538773)
-SUDO_USERS.add(570400686)
-SUDO_USERS.add(466337795)
-SUDO_USERS.add(254318997)
+SUDO_USERS.add(861055237)
+
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
