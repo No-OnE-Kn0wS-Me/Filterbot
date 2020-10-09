@@ -58,7 +58,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     num_chats = sql.get_user_num_chats(user.id)
     text += f"\n🌐<b>Chat count:</b> <code>{num_chats}</code>"
     text += "\n<b>🎭Number of profile pics:</b> {}".format(bot.get_user_profile_photos(user.id).total_count)
-    text += "\n<b>Support Channel</b> : @mAI_bOTs"
+    text += "\n<b>Support Channel</b> : @focusgrpchannel"
 
     try:
         user_member = chat.get_member(user.id)
