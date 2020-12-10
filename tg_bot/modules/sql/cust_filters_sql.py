@@ -16,13 +16,10 @@ class CustomFilters(BASE):
     is_audio = Column(Boolean, nullable=False, default=False)
     is_voice = Column(Boolean, nullable=False, default=False)
     is_video = Column(Boolean, nullable=False, default=False)
-    caption = Column(UnicodeText, nullable=True, default=None)
 
     has_buttons = Column(Boolean, nullable=False, default=False)
     # NOTE: Here for legacy purposes, to ensure older filters don't mess up.
     has_markdown = Column(Boolean, nullable=False, default=False)
-    # NOTE: Here for caption purposes,
-    has_caption = Column(Boolean, nullable=False, default=False)
 
     def __init__(self, chat_id, keyword, reply, is_sticker=False, is_document=False, is_image=False, is_audio=False,
                  is_voice=False, is_video=False, has_buttons=False):
@@ -37,7 +34,6 @@ class CustomFilters(BASE):
         self.is_video = is_video
         self.has_buttons = has_buttons
         self.has_markdown = True
-
 
     def __repr__(self):
         return "<Permissions for %s>" % self.chat_id
@@ -81,7 +77,7 @@ def get_all_filters():
 
 
 def add_filter(chat_id, keyword, reply, is_sticker=False, is_document=False, is_image=False, is_audio=False,
-               is_voice=False, is_video=False, buttons=None, caption=None, has_caption=False):
+               is_voice=False, is_video=False, buttons=None):
     global CHAT_FILTERS
 
     if buttons is None:
@@ -99,9 +95,6 @@ def add_filter(chat_id, keyword, reply, is_sticker=False, is_document=False, is_
 
         filt = CustomFilters(str(chat_id), keyword, reply, is_sticker, is_document, is_image, is_audio, is_voice,
                              is_video, bool(buttons))
-        if has_caption:
-            filt.caption = caption
-            filt.has_caption = has_caption
 
         if keyword not in CHAT_FILTERS.get(str(chat_id), []):
             CHAT_FILTERS[str(chat_id)] = sorted(CHAT_FILTERS.get(str(chat_id), []) + [keyword],
