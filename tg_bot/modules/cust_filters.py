@@ -40,7 +40,7 @@ def list_handlers(bot: Bot, update: Update):
             filter_list = "*local filters:*\n"
         else:
             chat_name = chat.title
-            filter_list = "*Filters in {}*:\n"
+            filter_list = "*Filters in {}*:\n".format(chat_name)
 
 
     all_handlers = sql.get_chat_triggers(chat_id)
@@ -50,7 +50,7 @@ def list_handlers(bot: Bot, update: Update):
         return
 
     for keyword in all_handlers:
-        entry = " - {}\n".format(escape_markdown(keyword))
+        entry = " - `{}`\n".format(escape_markdown(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(filter_list, parse_mode=telegram.ParseMode.MARKDOWN)
             filter_list = entry
@@ -95,6 +95,8 @@ def filters(bot: Bot, update: Update):
     is_voice = False
     is_audio = False
     is_video = False
+    media_caption = None
+    has_caption = False
     buttons = []
 
     # determine what the contents of the filter are - text, image, sticker, etc
@@ -109,28 +111,42 @@ def filters(bot: Bot, update: Update):
     elif msg.reply_to_message and msg.reply_to_message.sticker:
         content = msg.reply_to_message.sticker.file_id
         is_sticker = True
+        # stickers don't have caption in BOT API -_-
 
     elif msg.reply_to_message and msg.reply_to_message.document:
+        offset = len(msg.reply_to_message.caption)
+        media_caption, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
         content = msg.reply_to_message.document.file_id
         is_document = True
+        has_caption = True
 
     elif msg.reply_to_message and msg.reply_to_message.photo:
         offset = len(msg.reply_to_message.caption)
-        ignore_underscore_case, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
+        media_caption, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
         content = msg.reply_to_message.photo[-1].file_id  # last elem = best quality
         is_image = True
+        has_caption = True
 
     elif msg.reply_to_message and msg.reply_to_message.audio:
+        offset = len(msg.reply_to_message.caption)
+        media_caption, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
         content = msg.reply_to_message.audio.file_id
         is_audio = True
+        has_caption = True
 
     elif msg.reply_to_message and msg.reply_to_message.voice:
+        offset = len(msg.reply_to_message.caption)
+        media_caption, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
         content = msg.reply_to_message.voice.file_id
         is_voice = True
+        has_caption = True
 
     elif msg.reply_to_message and msg.reply_to_message.video:
+        offset = len(msg.reply_to_message.caption)
+        media_caption, buttons = button_markdown_parser(msg.reply_to_message.caption, entities=msg.reply_to_message.parse_entities(), offset=offset)
         content = msg.reply_to_message.video.file_id
         is_video = True
+        has_caption = True
 
     else:
         msg.reply_text("You didn't specify what to reply with!")
@@ -143,9 +159,9 @@ def filters(bot: Bot, update: Update):
             dispatcher.remove_handler(handler, HANDLER_GROUP)
 
     sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
-                   buttons)
+                   buttons, media_caption, has_caption)
 
-    msg.reply_text("Handler '{}' added in *{}*!".format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+    msg.reply_text("Handler '`{}`' Added in *{}*!".format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
     raise DispatcherHandlerStop
 
 
@@ -205,23 +221,22 @@ def reply_filter(bot: Bot, update: Update):
         if re.search(pattern, to_match, flags=re.IGNORECASE):
             filt = sql.get_filter(chat.id, keyword)
             buttons = sql.get_buttons(chat.id, filt.keyword)
+            media_caption = filt.caption if filt.caption is not None else ""
+            keyboard = None
+            if len(buttons) > 0:
+                keyboard = InlineKeyboardMarkup(build_keyboard(buttons))
             if filt.is_sticker:
-                message.reply_sticker(filt.reply)
+                message.reply_sticker(filt.reply, reply_markup=keyboard)
             elif filt.is_document:
-                message.reply_document(filt.reply)
+                message.reply_document(filt.reply, caption=media_caption, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
             elif filt.is_image:
-                if len(buttons) > 0:
-                    keyb = build_keyboard(buttons)
-                    keyboard = InlineKeyboardMarkup(keyb)
-                    message.reply_photo(filt.reply, reply_markup=keyboard)
-                else:
-                    message.reply_photo(filt.reply)
+                message.reply_photo(filt.reply, caption=media_caption, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
             elif filt.is_audio:
-                message.reply_audio(filt.reply)
+                message.reply_audio(filt.reply, caption=media_caption, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
             elif filt.is_voice:
-                message.reply_voice(filt.reply)
+                message.reply_voice(filt.reply, caption=media_caption, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
             elif filt.is_video:
-                message.reply_video(filt.reply)
+                message.reply_video(filt.reply, caption=media_caption, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
             elif filt.has_markdown:
                 keyb = build_keyboard(buttons)
                 keyboard = InlineKeyboardMarkup(keyb)
@@ -269,8 +284,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /filters: list all active filters in this chat.
-
+ - /filters: List all active filters in this chat.
 *Admin only:*
  - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
 is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
@@ -289,4 +303,3 @@ CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter, edite
 dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)
 dispatcher.add_handler(LIST_HANDLER)
-dispatcher.add_handler(CUST_FILTER_HANDLER, HANDLER_GROUP)
