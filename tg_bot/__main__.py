@@ -352,6 +352,24 @@ def get_settings(bot: Bot, update: Update):
     else:
         send_settings(chat.id, user.id, True)
 
+@run_async
+def kcfrsct_fnc(bot: Bot, update: Update):
+    query = update.callback_query
+    user = update.effective_user
+    _match = re.match(r"rsct_(.*)_33801", query.data)
+    # ensure no spinny white circle
+    if _match:
+        try:
+            from tg_bot.modules.sql.cust_filters_sql import get_btn_with_di
+            _soqka = get_btn_with_di(int(_match.group(1)))
+            query.answer(
+                text=_soqka.url.replace("\\n", "\n").replace("\\t", "\t"),
+                # HPFPOCWBANER: https://stackoverflow.com/a/42965750
+                show_alert=True
+            )
+        except Exception as e:
+            print(e)
+            bot.answer_callback_query(query.id)
 
 @run_async
 def donate(bot: Bot, update: Update):
@@ -415,6 +433,9 @@ def main():
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(donate_handler)
+    dispatcher.add_handler(
+        CallbackQueryHandler(kcfrsct_fnc, pattern=r"")
+    )
 
     # dispatcher.add_error_handler(error_callback)
 
