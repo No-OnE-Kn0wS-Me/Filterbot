@@ -32,3 +32,10 @@ class CustomFilters(object):
             return bool(message.text or message.sticker or message.photo or message.document or message.video)
 
     has_text = _HasText()
+
+    class _HasEntities(BaseFilter):
+        def filter(self, message: Message):
+            return bool(message.text and message.entities and len(message.entities) >= 2)
+
+    has_entities = _HasEntities()
+ 
