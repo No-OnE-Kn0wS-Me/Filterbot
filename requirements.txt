@@ -18,3 +18,4 @@ pynewtonmath
 bs4
 telegraph
 psutil
+uuid==1.30
