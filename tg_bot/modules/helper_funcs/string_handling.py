@@ -145,6 +145,8 @@ def button_markdown_parser(txt: str, entities: Dict[MessageEntity, str] = None, 
 
 
 def escape_invalid_curly_brackets(text: str, valids: List[str]) -> str:
+    if not text:
+        return text
     new_text = ""
     idx = 0
     while idx < len(text):
@@ -240,7 +242,7 @@ def extract_time(message, time_val):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            message.reply_text("Invalid time amount specified.")
+            message.reply_text("അസാധുവായ സമയ തുക വ്യക്തമാക്കി.")
             return ""
 
         if unit == 'm':
@@ -248,11 +250,13 @@ def extract_time(message, time_val):
         elif unit == 'h':
             bantime = int(time.time() + int(time_num) * 60 * 60)
         elif unit == 'd':
+            if time_num > 365:
+                time_num = 365
             bantime = int(time.time() + int(time_num) * 24 * 60 * 60)
         else:
             # how even...?
             return ""
         return bantime
     else:
-        message.reply_text("Invalid time type specified. Expected m,h, or d, got: {}".format(time_val[-1]))
+        message.reply_text("അസാധുവായ സമയ തരം വ്യക്തമാക്കി. പ്രതീക്ഷിച്ചതു m,h, or d, കിട്ടിയത്: {}".format(time_val[-1]))
         return ""
