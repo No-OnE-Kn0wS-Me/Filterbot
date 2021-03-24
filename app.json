@@ -92,7 +92,7 @@
       }
     }
   ],
-  "stack": "heroku-18",
+  "stack": "heroku-20",
   "buildpacks": [],
   "formation": {
     "web": {
