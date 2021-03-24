@@ -91,5 +91,13 @@
         "version": "12"
       }
     }
-  ]
+  ],
+  "stack": "heroku-18",
+  "buildpacks": [],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
 }
