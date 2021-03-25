@@ -9,12 +9,11 @@ pyowm
 bs4
 lxml
 demjson
-PyLyrics
 wget
 gTTS
 #telegram
-zalgo_text
 pynewtonmath
 bs4
-telegraph
 psutil
+pillow
+numpy
