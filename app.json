@@ -9,7 +9,7 @@
     "manager",
     "3"
   ],
-  "repository": "https://github.com/NO-ONE-KN0WS-ME/Filterbot",
+  "repository": "https://github.com/vivektp/filterbot",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable env variables",
@@ -29,11 +29,11 @@
     },
     "OWNER_USERNAME": {
       "description": "Your username",
-      "value": "No_OnE_Kn0wS_Me"
+      "value": "VivekTirur"
     },
     "OWNER_NAME": {
       "description": "Your name",
-      "value": "Hitsuka"
+      "value": "Vivek"
     },
     "WEBHOOK": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode messages",
@@ -61,7 +61,7 @@
     },
     "DONATION_LINK": {
       "description": "Optional: link where you would like to receive donations.",
-      "value": "https://www.paypal.me/Your_id_here"
+      "value": "https://t.me/vivektvp"
     },
     "PORT": {
       "description": "Port to use for your webhooks",
